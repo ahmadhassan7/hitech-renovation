@@ -2,7 +2,6 @@
 
 import TeamHero from "@/components/team/TeamHero";
 import TeamMembers from "@/components/team/TeamMembers";
-import JoinTeam from "@/components/team/JoinTeam";
 import CTA from "@/components/home/CTA";
 
 export default function TeamPage() {

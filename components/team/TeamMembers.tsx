@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -86,8 +87,8 @@ const TeamMembers = () => {
       });
 
       // Hover animations
-      const memberCards = gsap.utils.toArray(".team-member");
-      memberCards.forEach((card: any) => {
+      const memberCards = gsap.utils.toArray<HTMLElement>(".team-member");
+      memberCards.forEach((card) => {
         const overlay = card.querySelector(".member-overlay");
         const image = card.querySelector(".member-image");
         
@@ -137,9 +138,11 @@ const TeamMembers = () => {
               <div className="team-member group cursor-pointer">
                 {/* Image Container */}
                 <div className="relative overflow-hidden rounded-2xl mb-6">
-                  <img
+                  <Image
                     src={member.image}
                     alt={member.name}
+                    width={600}
+                    height={600}
                     className="member-image w-full h-96 object-cover"
                   />
                   

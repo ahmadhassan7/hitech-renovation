@@ -62,8 +62,8 @@ const WhyChoose = () => {
       });
 
       // Benefits animation
-      const benefits = gsap.utils.toArray(".benefit-card");
-      benefits.forEach((card: any, index) => {
+      const benefits = gsap.utils.toArray<HTMLElement>(".benefit-card");
+      benefits.forEach((card, index) => {
         gsap.from(card, {
           y: 100,
           opacity: 0,
@@ -107,7 +107,7 @@ const WhyChoose = () => {
             The HITECH Advantage
           </h2>
           <p className="body-lg text-secondary/70 max-w-3xl mx-auto">
-            When you choose HITECH, you're choosing a partner committed to excellence, 
+            When you choose HITECH, you&apos;re choosing a partner committed to excellence, 
             innovation, and your complete satisfaction.
           </p>
         </div>

@@ -6,11 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ServicesList = () => {
-  const [activeService, setActiveService] = useState("renovations");
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const services = {
+const services = {
     renovations: {
       title: "Renovations",
       subtitle: "Transform Your Space",
@@ -69,6 +65,10 @@ const ServicesList = () => {
     },
   };
 
+const ServicesList = () => {
+  const [activeService, setActiveService] = useState<keyof typeof services>("renovations");
+  const sectionRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Tab animation
@@ -106,7 +106,7 @@ const ServicesList = () => {
           {Object.entries(services).map(([key, service]) => (
             <button
               key={key}
-              onClick={() => setActiveService(key)}
+              onClick={() => setActiveService(key as keyof typeof services)}
               className={`service-tab px-8 py-4 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
                 activeService === key
                   ? "bg-primary text-white"

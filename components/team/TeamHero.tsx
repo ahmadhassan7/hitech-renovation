@@ -68,7 +68,7 @@ const TeamHero = () => {
           
           <p className="team-hero-subtitle body-lg text-light/80 max-w-3xl mx-auto">
             Our success is built on the expertise, dedication, and passion of our team. 
-            Meet the professionals who make HITECH a leader in Vancouver's construction industry.
+            Meet the professionals who make HITECH a leader in Vancouver&apos;s construction industry.
           </p>
         </div>
       </div>

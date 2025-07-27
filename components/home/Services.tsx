@@ -39,7 +39,7 @@ const Services = () => {
   useEffect(() => {
     let ctx = gsap.context(() => {
       const container = document.querySelector(".services-container");
-      const slides = gsap.utils.toArray(".service-slide");
+      const slides = gsap.utils.toArray<HTMLElement>(".service-slide");
       
       // Create horizontal scroll
       let tl = gsap.timeline({
