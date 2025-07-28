@@ -28,21 +28,23 @@ const Navigation = () => {
       ease: "power3.out",
     });
 
-    // Nav items animation
-    gsap.fromTo(".nav-item", 
-      {
-        opacity: 0,
-        y: -20,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power3.out",
-        delay: 0.3,
-      }
-    );
+    // Nav items animation - only on desktop
+    if (window.innerWidth >= 1024) {
+      gsap.fromTo(".desktop-nav .nav-item", 
+        {
+          opacity: 0,
+          y: -20,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          delay: 0.3,
+        }
+      );
+    }
   }, []);
 
   useEffect(() => {
@@ -58,21 +60,34 @@ const Navigation = () => {
         duration: 0.6,
         ease: "power4.inOut",
       })
-      .from(".menu-item", {
+      .fromTo(".menu-content .menu-item", {
         x: -100,
         opacity: 0,
+      }, {
+        x: 0,
+        opacity: 1,
         duration: 0.8,
         stagger: 0.1,
         ease: "power3.out",
       }, "-=0.2")
-      .from(".menu-footer", {
+      .fromTo(".menu-footer", {
         opacity: 0,
         y: 30,
+      }, {
+        opacity: 1,
+        y: 0,
         duration: 0.6,
         ease: "power3.out",
       }, "-=0.4");
     } else {
       document.body.style.overflow = "";
+      
+      // Animate menu out
+      gsap.to(".menu-overlay", {
+        scaleY: 0,
+        duration: 0.6,
+        ease: "power4.inOut",
+      });
     }
   }, [isOpen]);
 
@@ -87,8 +102,8 @@ const Navigation = () => {
     <>
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
-          scrolled ? "bg-light/95 backdrop-blur-md py-4" : "bg-transparent py-8"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled ? "bg-light/95 backdrop-blur-md py-3 md:py-4" : "bg-dark/80 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none py-4 md:py-8"
         }`}
       >
         <div className="container">
@@ -106,7 +121,7 @@ const Navigation = () => {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-12">
+            <div className="desktop-nav hidden lg:flex items-center gap-12">
               {navItems.map((item, index) => (
                 <Link
                   key={item.name}
@@ -132,17 +147,17 @@ const Navigation = () => {
               <div className="relative w-6 h-5">
                 <span
                   className={`absolute left-0 w-full h-0.5 transition-all duration-300 ${
-                    isOpen ? "bg-light rotate-45 top-2" : scrolled ? "bg-secondary top-0" : "bg-light top-0"
+                    isOpen ? "bg-light rotate-45 top-2" : "bg-light md:bg-light top-0"
                   }`}
                 />
                 <span
                   className={`absolute left-0 w-full h-0.5 transition-all duration-300 ${
-                    isOpen ? "opacity-0" : scrolled ? "bg-secondary top-2" : "bg-light top-2"
+                    isOpen ? "opacity-0" : "bg-light md:bg-light top-2"
                   }`}
                 />
                 <span
                   className={`absolute left-0 w-full h-0.5 transition-all duration-300 ${
-                    isOpen ? "bg-light -rotate-45 top-2" : scrolled ? "bg-secondary top-4" : "bg-light top-4"
+                    isOpen ? "bg-light -rotate-45 top-2" : "bg-light md:bg-light top-4"
                   }`}
                 />
               </div>
@@ -152,12 +167,12 @@ const Navigation = () => {
       </nav>
 
       {/* Mobile Menu */}
-      <div className={`fixed inset-0 z-30 lg:hidden ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
+      <div className={`fixed inset-0 z-30 lg:hidden ${isOpen ? "pointer-events-auto visible" : "pointer-events-none invisible"}`}>
         <div 
           className="menu-overlay absolute inset-0 bg-secondary origin-top"
           style={{ transform: "scaleY(0)" }}
         />
-        <div className="relative h-full flex flex-col justify-center px-8">
+        <div className="menu-content relative h-full flex flex-col justify-center px-8">
           <nav className="space-y-8">
             {navItems.map((item, index) => (
               <Link

@@ -129,7 +129,7 @@ const Projects = () => {
               href={`/projects/${project.id}`}
               className="project-card group relative overflow-hidden cursor-none"
             >
-              <div className="relative h-[60vh] overflow-hidden">
+              <div className="relative h-[40vh] md:h-[60vh] overflow-hidden">
                 <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
                 <img
                   src={project.image}
@@ -137,12 +137,12 @@ const Projects = () => {
                   className="project-image w-full h-full object-cover transform scale-110 group-hover:scale-100 transition-transform duration-700"
                 />
                 
-                <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
-                  <div className="transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                    <p className="text-primary text-sm font-medium mb-2">
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 z-20">
+                  <div className="md:transform md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-500">
+                    <p className="text-primary text-xs md:text-sm font-medium mb-2">
                       {project.category} • {project.year}
                     </p>
-                    <h3 className="display-3 text-light">
+                    <h3 className="text-2xl md:display-3 text-light">
                       {project.title}
                     </h3>
                   </div>

@@ -99,15 +99,16 @@ const Portfolio = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Filter buttons animation
-      gsap.from(".filter-btn", {
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
+      // Simple fade in animation for filter buttons
+      gsap.to(".filter-btn", {
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.05,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: ".filter-container",
-          start: "top 90%",
+          start: "top 95%",
+          once: true,
         },
       });
     }, sectionRef);
@@ -135,22 +136,44 @@ const Portfolio = () => {
   return (
     <section ref={sectionRef} className="section bg-light">
       <div className="container">
+        {/* Filter Section */}
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-3">Browse Our Portfolio</h2>
+          <p className="text-secondary/60 text-sm md:text-base">Select a category to filter projects</p>
+        </div>
+        
         {/* Filter Buttons */}
-        <div className="filter-container flex flex-wrap justify-center gap-4 mb-16">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setFilter(cat.id)}
-              className={`filter-btn px-6 py-3 text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
-                filter === cat.id
-                  ? "bg-primary text-white"
-                  : "bg-white text-secondary border-2 border-secondary/20 hover:border-primary hover:text-primary"
-              }`}
-            >
-              {cat.name}
-              <span className="ml-2 text-xs opacity-60">({cat.count})</span>
-            </button>
-          ))}
+        <div className="filter-container mb-12 md:mb-16">
+          <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 max-w-3xl mx-auto">
+            {categories.map((cat, index) => (
+              <button
+                key={cat.id}
+                onClick={() => setFilter(cat.id)}
+                className={`filter-btn group relative inline-flex items-center px-5 sm:px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium transition-all duration-300 ${
+                  filter === cat.id
+                    ? "bg-primary text-white shadow-xl"
+                    : "bg-white text-secondary hover:text-primary shadow-md hover:shadow-lg"
+                }`}
+                style={{
+                  opacity: 0,
+                }}
+              >
+                <span className="relative z-10 text-xs sm:text-sm tracking-wide">
+                  {cat.name}
+                </span>
+                <span className={`relative z-10 ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
+                  filter === cat.id 
+                    ? 'bg-white/20 text-white' 
+                    : 'bg-secondary/10 text-secondary/70 group-hover:bg-primary/10 group-hover:text-primary'
+                }`}>
+                  {cat.count}
+                </span>
+                {filter === cat.id && (
+                  <span className="absolute inset-0 rounded-full bg-primary animate-pulse opacity-20"></span>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Projects Grid */}

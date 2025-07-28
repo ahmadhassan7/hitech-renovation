@@ -57,10 +57,10 @@ const Marquee = () => {
           {items.map((item, index) => (
             <span
               key={index}
-              className={`inline-block px-8 ${
+              className={`inline-block px-4 md:px-8 ${
                 item === "•" 
-                  ? "text-primary text-2xl" 
-                  : "display-3 text-light hover:text-primary transition-colors cursor-pointer"
+                  ? "text-primary text-xl md:text-2xl" 
+                  : "text-2xl md:display-3 text-light hover:text-primary transition-colors cursor-pointer"
               }`}
             >
               {item}

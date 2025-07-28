@@ -55,7 +55,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative min-h-[85vh] h-[85vh] flex items-center overflow-hidden bg-light">
+    <section ref={containerRef} className="relative min-h-screen md:min-h-[85vh] md:h-[85vh] flex items-center overflow-hidden bg-light pt-16 md:pt-0">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <div className="hero-bg absolute inset-0 scale-110">
@@ -71,9 +71,9 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 w-full">
         <div className="container">
-          <div className="max-w-4xl pt-24 md:pt-32">
+          <div className="max-w-4xl">
             <h1 className="mb-4 md:mb-6">
-              <div className="hero-title display-1 text-light -mt-4 md:-mt-8">
+              <div className="hero-title display-1 text-light -mt-2 md:-mt-4 lg:-mt-8">
                 BUILDING
               </div>
               <div className="hero-title display-1 text-primary">
@@ -84,7 +84,7 @@ const Hero = () => {
               </div>
             </h1>
             
-            <p className="hero-subtitle body-lg text-light/90 max-w-2xl mb-6 md:mb-8">
+            <p className="hero-subtitle text-base md:body-lg text-light/90 max-w-2xl mb-6 md:mb-8">
               Premier renovation and construction services across Vancouver and Greater BC. 
               Transform your space with innovation, quality, and unmatched craftsmanship.
             </p>

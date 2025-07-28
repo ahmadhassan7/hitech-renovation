@@ -38,49 +38,64 @@ const Services = () => {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
-      const container = document.querySelector(".services-container");
-      const slides = gsap.utils.toArray<HTMLElement>(".service-slide");
-      
-      // Create horizontal scroll
-      let tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container,
-          pin: true,
-          scrub: 1,
-          end: () => "+=" + (slides.length - 1) * window.innerHeight,
-          anticipatePin: 1,
-        }
-      });
+      // Only apply horizontal scroll on desktop
+      if (window.innerWidth >= 1024) {
+        const container = document.querySelector(".services-container");
+        const slides = gsap.utils.toArray<HTMLElement>(".service-slide");
+        
+        // Create horizontal scroll
+        let tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: container,
+            pin: true,
+            scrub: 1,
+            end: () => "+=" + (slides.length - 1) * window.innerHeight,
+            anticipatePin: 1,
+          }
+        });
 
-      // Animate each slide
-      slides.forEach((slide, i) => {
-        if (i === 0) return; // First slide is already visible
-        
-        tl.fromTo(slide, 
-          {
-            yPercent: 100,
-            opacity: 0,
+        // Animate each slide
+        slides.forEach((slide, i) => {
+          if (i === 0) return; // First slide is already visible
+          
+          tl.fromTo(slide, 
+            {
+              yPercent: 100,
+              opacity: 0,
+            },
+            {
+              yPercent: 0,
+              opacity: 1,
+              duration: 1,
+              ease: "power2.inOut",
+            },
+            i - 0.5
+          );
+          
+          // Fade out previous slide completely
+          if (i > 0) {
+            tl.to(slides[i - 1], {
+              opacity: 0,
+              scale: 0.9,
+              yPercent: -20,
+              duration: 1,
+              ease: "power2.inOut",
+            }, i - 0.5);
+          }
+        });
+      } else {
+        // Simple fade-in animation for mobile
+        gsap.from(".service-item", {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: ".services-mobile",
+            start: "top 80%",
           },
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power2.inOut",
-          },
-          i - 0.5
-        );
-        
-        // Fade out previous slide completely
-        if (i > 0) {
-          tl.to(slides[i - 1], {
-            opacity: 0,
-            scale: 0.9,
-            yPercent: -20,
-            duration: 1,
-            ease: "power2.inOut",
-          }, i - 0.5);
-        }
-      });
+        });
+      }
 
       // Header animation
       gsap.from(".services-header", {
@@ -109,8 +124,8 @@ const Services = () => {
         </div>
       </div>
 
-      {/* Services Container */}
-      <div className="services-container relative h-screen">
+      {/* Desktop Services Container */}
+      <div className="services-container relative h-screen hidden lg:block">
         {services.map((service, index) => (
           <div
             key={index}
@@ -149,6 +164,45 @@ const Services = () => {
                     <div className="absolute inset-0 bg-gradient-to-r from-secondary-80 via-secondary-40 to-transparent" />
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile Services Container */}
+      <div className="services-mobile container lg:hidden space-y-16">
+        {services.map((service, index) => (
+          <div key={index} className="service-item">
+            <div className="grid gap-6">
+              {/* Service Image */}
+              <div className="relative h-64 sm:h-80 overflow-hidden">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-secondary-80 via-secondary-40 to-transparent" />
+              </div>
+              
+              {/* Service Content */}
+              <div>
+                <div className="display-1 text-primary mb-2">
+                  {service.number}
+                </div>
+                <h3 className="display-3 mb-4">{service.title}</h3>
+                <p className="text-base text-light/80 mb-6">
+                  {service.description}
+                </p>
+                <a
+                  href={service.title === "Home Building" ? "/services/custom-homes" : `/services/${service.title.toLowerCase().replace(" ", "-")}`}
+                  className="inline-flex items-center text-primary font-medium uppercase tracking-wider text-sm"
+                >
+                  Learn More
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
