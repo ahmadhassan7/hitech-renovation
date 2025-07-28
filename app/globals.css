@@ -387,6 +387,19 @@ body {
   }
 }
 
+/* Hero section height */
+.hero-section {
+  min-height: 100vh;
+  height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .hero-section {
+    min-height: 90vh !important;
+    height: 90vh !important;
+  }
+}
+
 /* Utilities */
 .text-primary { color: var(--color-primary); }
 .text-secondary { color: var(--color-secondary); }

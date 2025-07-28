@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
@@ -67,39 +67,41 @@ const Projects = () => {
         },
       });
 
-      // Hover parallax effect
-      const cards = document.querySelectorAll(".project-card");
-      cards.forEach((card) => {
-        const image = card.querySelector(".project-image");
-        
-        card.addEventListener("mousemove", (e: any) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
+      // Hover parallax effect - only on desktop
+      if (window.innerWidth >= 768) {
+        const cards = document.querySelectorAll(".project-card");
+        cards.forEach((card) => {
+          const image = card.querySelector(".project-image");
           
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
+          card.addEventListener("mousemove", (e: any) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const moveX = (x - centerX) / centerX * 20;
+            const moveY = (y - centerY) / centerY * 20;
+            
+            gsap.to(image, {
+              x: moveX,
+              y: moveY,
+              duration: 0.5,
+              ease: "power2.out",
+            });
+          });
           
-          const moveX = (x - centerX) / centerX * 20;
-          const moveY = (y - centerY) / centerY * 20;
-          
-          gsap.to(image, {
-            x: moveX,
-            y: moveY,
-            duration: 0.5,
-            ease: "power2.out",
+          card.addEventListener("mouseleave", () => {
+            gsap.to(image, {
+              x: 0,
+              y: 0,
+              duration: 0.5,
+              ease: "power2.out",
+            });
           });
         });
-        
-        card.addEventListener("mouseleave", () => {
-          gsap.to(image, {
-            x: 0,
-            y: 0,
-            duration: 0.5,
-            ease: "power2.out",
-          });
-        });
-      });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -123,33 +125,69 @@ const Projects = () => {
         </div>
 
         <div ref={projectsRef} className="grid md:grid-cols-2 gap-8">
-          {projects.map((project) => (
-            <Link
-              key={project.id}
-              href={`/projects/${project.id}`}
-              className="project-card group relative overflow-hidden cursor-none"
-            >
-              <div className="relative h-[40vh] md:h-[60vh] overflow-hidden">
-                <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="project-image w-full h-full object-cover transform scale-110 group-hover:scale-100 transition-transform duration-700"
-                />
-                
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 z-20">
-                  <div className="md:transform md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-500">
-                    <p className="text-primary text-xs md:text-sm font-medium mb-2">
+          {projects.map((project) => {
+            // Mobile version - non-clickable
+            const mobileVersion = (
+              <div
+                key={`${project.id}-mobile`}
+                className="project-card relative overflow-hidden md:hidden"
+              >
+                <div className="relative h-[60vh] overflow-hidden">
+                  <div className="absolute inset-0 bg-dark/20 z-10" />
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="project-image w-full h-full object-cover transform scale-110"
+                  />
+                  
+                  <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
+                    <p className="text-primary text-sm font-medium mb-2">
                       {project.category} • {project.year}
                     </p>
-                    <h3 className="text-2xl md:display-3 text-light">
+                    <h3 className="display-3 text-light">
                       {project.title}
                     </h3>
                   </div>
                 </div>
               </div>
-            </Link>
-          ))}
+            );
+
+            // Desktop version - clickable with hover
+            const desktopVersion = (
+              <Link
+                key={project.id}
+                href={`/projects/${project.id}`}
+                className="project-card group relative overflow-hidden cursor-none hidden md:block"
+              >
+                <div className="relative h-[60vh] overflow-hidden">
+                  <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="project-image w-full h-full object-cover transform scale-110 group-hover:scale-100 transition-transform duration-700"
+                  />
+                  
+                  <div className="absolute bottom-0 left-0 right-0 p-8 z-20 overflow-hidden">
+                    <div className="transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
+                      <p className="text-primary text-sm font-medium mb-2">
+                        {project.category} • {project.year}
+                      </p>
+                      <h3 className="display-3 text-light">
+                        {project.title}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            );
+
+            return (
+              <React.Fragment key={project.id}>
+                {mobileVersion}
+                {desktopVersion}
+              </React.Fragment>
+            );
+          })}
         </div>
 
         <div className="mt-12 text-center md:hidden">

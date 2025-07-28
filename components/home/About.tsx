@@ -46,16 +46,23 @@ const About = () => {
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="about-content">
-            <span className="text-primary font-medium uppercase tracking-wider text-sm md:text-base">About HITECH</span>
-            <h2 className="text-3xl md:display-2 text-secondary mt-2 mb-4 md:mb-6">
-              Transforming Spaces,<br />Building Trust
+            <h2 className="mb-4 md:mb-6 space-y-2 md:space-y-0">
+              <div className="display-1 text-secondary -mt-2 md:-mt-4 lg:-mt-6">
+                TRANSFORMING
+              </div>
+              <div className="display-1 text-primary">
+                SPACES
+              </div>
+              <div className="display-2 text-secondary mt-2 md:mt-0">
+                Building Trust
+              </div>
             </h2>
-            <p className="text-base md:body-lg text-secondary/80 mb-4 md:mb-6">
+            <p className="text-base md:body-lg text-secondary/80 mb-4 md:mb-6 max-w-2xl">
               For over 16 years, HITECH Renovations has been the trusted partner for 
               homeowners and businesses across Vancouver and Greater BC. Our commitment 
               to excellence, innovation, and client satisfaction sets us apart.
             </p>
-            <p className="text-sm md:body-md text-secondary/70 mb-6 md:mb-8">
+            <p className="text-sm md:body-md text-secondary/70 mb-6 md:mb-8 max-w-2xl">
               From intimate home renovations to large-scale commercial projects, we bring 
               the same level of dedication, craftsmanship, and attention to detail to every 
               build. Our team of experts ensures your vision becomes reality.
@@ -65,19 +72,23 @@ const About = () => {
             </Link>
           </div>
 
-          <div>
+          <div className="order-first lg:order-last">
             <div className="relative mt-8 lg:mt-0">
-              <div className="about-image relative overflow-hidden h-[300px] md:h-[400px] lg:h-[500px]">
+              <div className="about-image relative overflow-hidden h-[400px] md:h-[500px] lg:h-[600px] rounded-lg">
                 <img
                   src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop"
                   alt="HITECH team at work"
                   className="w-full h-full object-cover"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent" />
               </div>
-              <div className="absolute -bottom-4 -left-4 md:-bottom-8 md:-left-8 bg-primary p-4 md:p-8 z-10 max-w-[200px] md:max-w-none">
-                <p className="text-light text-base md:text-lg font-medium">
-                  "Quality is not an act,<br />it is a habit"
-                </p>
+              <div className="absolute bottom-8 left-8 right-8 z-10">
+                <div className="bg-primary/90 backdrop-blur-sm p-6 md:p-8 rounded-lg max-w-sm">
+                  <p className="text-2xl md:text-3xl font-serif text-white leading-tight">
+                    "Quality is not an act, it is a habit"
+                  </p>
+                  <p className="text-white/80 mt-3 text-sm md:text-base">— Aristotle</p>
+                </div>
               </div>
             </div>
           </div>

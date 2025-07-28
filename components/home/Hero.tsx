@@ -55,7 +55,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative min-h-screen md:min-h-[85vh] md:h-[85vh] flex items-center overflow-hidden bg-light pt-16 md:pt-0">
+    <section ref={containerRef} className="hero-section relative flex items-center overflow-hidden bg-light pt-16 md:pt-0">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <div className="hero-bg absolute inset-0 scale-110">
@@ -71,15 +71,15 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 w-full">
         <div className="container">
-          <div className="max-w-4xl">
-            <h1 className="mb-4 md:mb-6">
-              <div className="hero-title display-1 text-light -mt-2 md:-mt-4 lg:-mt-8">
+          <div className="max-w-4xl md:mt-16 lg:mt-24">
+            <h1 className="mb-4 md:mb-6 space-y-4 md:space-y-0">
+              <div className="hero-title display-1 text-light -mt-2 md:-mt-4 lg:-mt-6">
                 BUILDING
               </div>
               <div className="hero-title display-1 text-primary">
                 EXCELLENCE
               </div>
-              <div className="hero-title display-2 text-light">
+              <div className="hero-title display-2 text-light mt-4 md:mt-0">
                 Since 2009
               </div>
             </h1>
